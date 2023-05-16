@@ -1,0 +1,210 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On this day</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+
+    <style>
+        body
+        {
+            background-color: rgb(249, 255, 255);
+        }
+        section
+        {
+            padding: 20px 0;
+        }
+
+    </style>
+</head>
+
+
+<body>    
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container-lg">
+          <a class="navbar-brand" href="{% url 'home:home_page' %}">On this day</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{% url 'home:home_page' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Blog</a>
+              </li>
+              
+              {% if not user.is_authenticated %}
+              <li class="nav-item">
+                <!-- not this id and the one of signup is related to some script in end of the file related to the backend -->
+                <a id="login" href="" class="text-info nav-link" data-bs-toggle="modal" data-bs-target="#modalLoginForm">Sign in</a>
+              </li>
+              <li class="nav-item">
+                <a id="signup" href="" class="text-info nav-link" data-bs-toggle="modal" data-bs-target="#modalSignUpForm">Sign Up</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:profile' profile_id=user.id %}">My Profile</a>
+              </li>
+              <form action="{% url 'accounts:logout' %}" method="post">
+                {% csrf_token %}
+                <li class="nav-item">
+                  <button class="btn btn-outline-secondary" type="submit">logout</button>
+                </li>
+              </form>
+              
+            
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    
+    {% if not user.is_authenticated %}
+      <!-- sign in & sign up -->
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        {% if redirected_from == 'login' %}
+          {% if messages %}
+
+                <ul class="list-unstyled">
+                  {% for message in messages %}
+                    <li>
+                      <div class="alert alert-danger" role="alert">
+                        {{message}}
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+
+          {% endif %}
+        {% endif %}
+        <form class="p-3" action="{% url 'accounts:login' %}" method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" name="login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="remember" value="remember" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Remember me
+            </label>
+          </div>
+          <!-- <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+          </div> -->
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Login</button><br>
+            <small>or <a href="" class="close" data-bs-dismiss="modal" aria-label="Close"
+               data-bs-toggle="modal" data-bs-target="#modalSignUpForm">sign up</a></small>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+
+    <div class="modal fade" id="modalSignUpForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Sign Up</h4>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        
+          {% if redirected_from == 'signup' %}
+            {% if messages %}
+
+                <ul class="list-unstyled">
+                  {% for message in messages %}
+                    <li>
+                      <div class="alert alert-danger" role="alert">
+                        {{message}}
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+
+            {% endif %}
+          {% endif %}
+          <form class="p-3" action="{% url 'accounts:register' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" name="password1" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword2" class="form-label">Password(again)</label>
+              <input type="password" name="password2" class="form-control" id="exampleInputPassword2">
+            </div>
+            <!-- <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div> -->
+            <div class="modal-footer d-flex justify-content-center">
+              <button type="submit" class="btn btn-primary">Sign up</button><br>
+              <small>or <a href="" class="close" data-bs-dismiss="modal" aria-label="Close" 
+                data-bs-toggle="modal" data-bs-target="#modalLoginForm">sign in</a></small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+
+    {% block content%}
+
+
+    {% endblock %}
+    <!-- footer -->
+    <div class="container-lg">
+        <footer class="mt-auto text-center">
+          <p>Created by <a href="https://github.com/mohamedAbdelaleem" target="_blank"><i class="bi bi-person-fill"></i>mohamed-abdelaleem</a>.</p>
+        </footer>
+      </div>
+      <!-- js -->
+      <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+      {% if redirected_from %}
+      <script>
+        const link = document.getElementById('{{redirected_from}}');
+        link.click();
+      </script>        
+
+      {% endif %}
+
+</body>
+</html>
+

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block content%}
+
+    <!-- main -->
+    <section class="mb-5">
+        <div class="container-lg">
+            <div class="text-center">
+                <h2 class="display-3">Events On this day.</h2>
+                <p class="lead">Discover what happend on this day!<i class="bi bi-person-fill"></i></p>
+            </div>
+        </div>
+      </section>
+
+
+    <!-- body -->
+      <section id="body">
+        <div class="container-lg">
+
+            <div class="event row justify-content-center align-items-center border border-1 p-2 my-3">
+                <div class="col-lg-3">
+					<img src="{% static 'imgs/Today-in-History-banner.jpg' %}" alt="" class="img-fluid">
+                </div>
+				<div class="col-lg-9">
+					<div class="text">
+						<h4 class="display-4">Lorem ipsum dolor sit amet.</h4>
+						<p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat vel sequi harum molestiae adipisci voluptatem hic repudiandae, rerum dolor non exercitationem tempore,
+							 laborum nulla, iusto quos facere officia temporibus enim!..<a href="#">more</a></p>
+				
+					</div>
+                </div>
+            </div>
+			<div class="event row justify-content-center align-items-center border border-1 p-2 my-3">
+                <div class="col-lg-3">
+					<img src="imgs/Today-in-History-banner.jpg" alt="" class="img-fluid">
+                </div>
+				<div class="col-lg-9">
+					<div class="text">
+						<h4 class="display-4">Lorem ipsum dolor sit amet.</h4>
+						<p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat vel sequi harum molestiae adipisci voluptatem hic repudiandae, rerum dolor non exercitationem tempore,
+							 laborum nulla, iusto quos facere officia temporibus enim!..<a href="#">more</a></p>
+				
+					</div>
+                </div>
+            </div>
+			<div class="event row justify-content-center align-items-center border border-1 p-2 my-3">
+                <div class="col-lg-3">
+					<img src="imgs/Today-in-History-banner.jpg" alt="" class="img-fluid">
+                </div>
+				<div class="col-lg-9">
+					<div class="text">
+						<h4 class="display-4">Lorem ipsum dolor sit amet.</h4>
+						<p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat vel sequi harum molestiae adipisci voluptatem hic repudiandae, rerum dolor non exercitationem tempore,
+							 laborum nulla, iusto quos facere officia temporibus enim!..<a href="#">more</a></p>
+				
+					</div>
+                </div>
+            </div>
+
+        </div>
+      </section>
+
+
+      {% endblock %}
