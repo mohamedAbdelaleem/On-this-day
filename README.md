@@ -6,6 +6,6 @@ A website that displays the events that occurred on this day. The website contai
 - users can explore the events that happened on this day.
 - users can explore the blog section.
 - each user has a profile.
-- users can log in using their emails or google accounts.
+- users can log in using their emails.
 - only authenticated users can interact with the blogs and send reports.
 - admins can review the reports.
