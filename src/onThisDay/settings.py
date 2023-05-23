@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-import local_settings
+import onThisDay.local_settings as local_settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -167,3 +167,8 @@ MEDIA_URL = '/media/'
 # Crispy
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Geoip
+
+GEOIP_PATH = os.path.join(BASE_DIR, 'geoip_dir')
+GEOIP_CITY = 'dbip-city-lite-2023-05.mmdb' 

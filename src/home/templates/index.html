@@ -17,49 +17,52 @@
     <!-- body -->
       <section id="body">
         <div class="container-lg">
-
+            
+            {% for event in events_page %}
             <div class="event row justify-content-center align-items-center border border-1 p-2 my-3">
                 <div class="col-lg-3">
-					<img src="{% static 'imgs/Today-in-History-banner.jpg' %}" alt="" class="img-fluid">
+					<img src="{{event.img_src}}" alt="" class="img-fluid">
                 </div>
 				<div class="col-lg-9">
 					<div class="text">
-						<h4 class="display-4">Lorem ipsum dolor sit amet.</h4>
-						<p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat vel sequi harum molestiae adipisci voluptatem hic repudiandae, rerum dolor non exercitationem tempore,
-							 laborum nulla, iusto quos facere officia temporibus enim!..<a href="#">more</a></p>
+						<h4 class="display-4">{{event.title}}</h4>
+						<p class="lead">{{ event.text }}..<a href="{{ event.url }}" target="_blank">more</a></p>
 				
 					</div>
                 </div>
             </div>
-			<div class="event row justify-content-center align-items-center border border-1 p-2 my-3">
-                <div class="col-lg-3">
-					<img src="imgs/Today-in-History-banner.jpg" alt="" class="img-fluid">
-                </div>
-				<div class="col-lg-9">
-					<div class="text">
-						<h4 class="display-4">Lorem ipsum dolor sit amet.</h4>
-						<p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat vel sequi harum molestiae adipisci voluptatem hic repudiandae, rerum dolor non exercitationem tempore,
-							 laborum nulla, iusto quos facere officia temporibus enim!..<a href="#">more</a></p>
-				
-					</div>
-                </div>
-            </div>
-			<div class="event row justify-content-center align-items-center border border-1 p-2 my-3">
-                <div class="col-lg-3">
-					<img src="imgs/Today-in-History-banner.jpg" alt="" class="img-fluid">
-                </div>
-				<div class="col-lg-9">
-					<div class="text">
-						<h4 class="display-4">Lorem ipsum dolor sit amet.</h4>
-						<p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat vel sequi harum molestiae adipisci voluptatem hic repudiandae, rerum dolor non exercitationem tempore,
-							 laborum nulla, iusto quos facere officia temporibus enim!..<a href="#">more</a></p>
-				
-					</div>
-                </div>
-            </div>
+
+            {% endfor %}
 
         </div>
       </section>
 
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+        {% if events_page.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+          <li class="page-item disabled">
+            <a class="page-link" href="?page={{events_page.previous_page_number}}">Previous</a>
+          </li>
+        {% endif %}
+        <span class="m-2">{{events_page.number}} out of {{events_page.paginator.num_pages}} </span>
+
+        {% if events_page.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{events_page.next_page_number}}">Next</a>
+            </li>
+
+          <li class="page-item"><a class="page-link" href="?page={{events_page.paginator.num_pages}}">Last</a></li>
+        {% endif %}
+        </ul>
+      </nav>
+
 
       {% endblock %}
+
+
+{%block footer%}
+<a href='https://db-ip.com'>IP Geolocation by DB-IP</a>
+
+{% endblock %}
