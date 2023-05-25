@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import requests
 from typing import Dict, List
 import sys
@@ -8,7 +8,7 @@ current_dir = os.path.abspath('.')
 sys.path.append(current_dir + '\src')
 from onThisDay import local_settings
 
-def fetch_on_this_day_events(date: datetime.datetime) -> Dict:
+def fetch_on_this_day_events(date: datetime) -> Dict:
     
     date = date.strftime('%m/%d')
 

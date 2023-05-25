@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
 
-
     # local
     'blog',
     'accounts',
@@ -172,3 +171,23 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 GEOIP_PATH = os.path.join(BASE_DIR, 'geoip_dir')
 GEOIP_CITY = 'dbip-city-lite-2023-05.mmdb' 
+
+
+# debug-toolbar
+
+if DEBUG:
+
+    INSTALLED_APPS += ['debug_toolbar',]
+    
+    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE
+
+    INTERNAL_IPS = [
+        "127.0.0.1",
+    ]
+
+    import mimetypes
+    mimetypes.add_type("application/javascript", ".js", True)
+
+
+
+
