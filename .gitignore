@@ -1,3 +1,4 @@
 env/
-src/local_settings.py
+src/onThisDay/local_settings.py
+src/geoip_dir
 src/**/__pycache__/
