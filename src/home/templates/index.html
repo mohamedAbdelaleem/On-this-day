@@ -9,6 +9,7 @@
             <div class="text-center">
                 <h2 class="display-3">Events On this day.</h2>
                 <p class="lead">Discover what happend on this day!<i class="bi bi-person-fill"></i></p>
+                <p class="lead display-5">{{today}}</p>
             </div>
         </div>
       </section>
@@ -25,8 +26,7 @@
                 </div>
 				<div class="col-lg-9">
 					<div class="text">
-						<h4 class="display-4">{{event.title}}</h4>
-						<p class="lead">{{ event.text }}..<a href="{{ event.url }}" target="_blank">more</a></p>
+						<p class="lead"><span class="fw-bolder fst-italic">[{{event.year}}]</span> {{ event.text }}..<a href="{{ event.url }}" target="_blank">more</a></p>
 				
 					</div>
                 </div>

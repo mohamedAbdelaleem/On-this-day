@@ -16,24 +16,26 @@ def home(request: HttpRequest) -> HttpResponse:
     if user_timezone:
         curr_date = convert_utc_to_timezone(user_timezone)
     
-    events = cache.get(curr_date.strftime('%m/%d'))
+    today = curr_date.strftime('%m/%d')
+    events = cache.get(today)
     if not events:
         events = fetch_on_this_day_events(curr_date)
-        cache.set(curr_date.strftime("%m/%d"), events, 27 * 60*60)
+        cache.set(today, events, 27 * 60*60)
 
     selected_events = convert_on_this_day_data(events['selected'])
 
+
     paginator = Paginator(selected_events, 7)
     page_num = request.GET.get('page', 1)
+    events_page = paginator.get_page(page_num)    
 
-    events_page = paginator.get_page(page_num)
-    
     redirected_from = request.COOKIES.get("redirected_from")
-
     context = {
         "redirected_from": redirected_from,
         "events_page": events_page,
+        "today": today,
     }
+    
     response = render(request, 'index.html', context)
     if redirected_from:
         response.delete_cookie("redirected_from")

@@ -33,7 +33,7 @@ def convert_on_this_day_data(events: List) -> List:
 
     Returns:
         new_events (list): A simplified list of events, where each event is represented as
-                    a dict with the following keys('text', 'img_src', 'url')
+                    a dict with the following keys('text', 'year', 'img_src', 'url')
     """
 
     new_events = []
@@ -41,6 +41,7 @@ def convert_on_this_day_data(events: List) -> List:
     for event in events:
         s_event = {}
         s_event['text'] = event['text']
+        s_event['year'] = event['year']
         s_event['img_src'] = None
         s_event['url'] = None
         event_page = event['pages'][0]
@@ -50,6 +51,7 @@ def convert_on_this_day_data(events: List) -> List:
         
         if "content_urls" in event_page:
             s_event['url'] = event_page['content_urls']['desktop']['page']
+            
         new_events.append(s_event)
     
     return new_events
