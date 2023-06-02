@@ -8,7 +8,7 @@
         <div class="container-lg">
             <div class="text-center">
                 <h2 class="display-3">Events On this day.</h2>
-                <p class="lead">Discover what happend on this day!<i class="bi bi-person-fill"></i></p>
+                <p class="lead">Discover what happened on this day!<i class="bi bi-person-fill"></i></p>
                 <p class="lead display-5">{{today}}</p>
             </div>
         </div>
@@ -42,7 +42,7 @@
 
         {% if events_page.has_previous %}
           <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
-          <li class="page-item disabled">
+          <li class="page-item">
             <a class="page-link" href="?page={{events_page.previous_page_number}}">Previous</a>
           </li>
         {% endif %}
