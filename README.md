@@ -1,7 +1,7 @@
 # On-this-day
 A website that displays the events that occurred on this day. The website contains also a blog section.
 
-#### - Reduced events page load time from approximately 2 seconds to approximately 30 milliseconds by optimizing system performance, using Server-side caching.
+#### - Increased events page response speed by 54% by optimizing system performance, using Server-side caching.
 #### - Implemented an algorithm for dealing with different time zones from users' IPs.
 #### - Integrated with Wikimedia API to retrieve the events data.
 
