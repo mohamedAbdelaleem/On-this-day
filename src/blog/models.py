@@ -1,3 +1,17 @@
 from django.db import models
 
-# Create your models here.
+
+# class Article(models.Model):
+#     pass
+
+
+# class Report(models.Model):
+#     pass
+
+
+# class Reaction(models.Model):
+#     pass
+
+
+# class Comment(models.Model):
+#     pass

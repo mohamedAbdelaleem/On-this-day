@@ -2,6 +2,8 @@ import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 def generate_img_path(instance, filename) -> str:
@@ -12,6 +14,10 @@ def generate_img_path(instance, filename) -> str:
 class CustomUser(AbstractUser):
 
     email = models.EmailField(unique=True, null=False)
+
+
+    first_name = None
+    last_name = None
 
     def __str__(self) -> str:
         return self.username
@@ -35,6 +41,9 @@ class Profile(models.Model):
         return self.user.username
 
 
-
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_profile(sender: AbstractUser, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
 
 
