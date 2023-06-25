@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 
 
 def generate_img_path(instance, filename) -> str:
@@ -36,13 +37,16 @@ class Profile(models.Model):
     @property
     def full_name(self) -> str:
         return f"{self.first_name} {self.last_name}"
+    
+    def get_absolute_url(self) -> str:
+        return reverse("accounts:profile", args=[self.user.id])
 
     def __str__(self) -> str:
         return self.user.username
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_profile(sender: AbstractUser, instance, created, **kwargs):
+def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 

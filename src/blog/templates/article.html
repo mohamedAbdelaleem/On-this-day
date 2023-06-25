@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<main class="container-lg my-3">
+
+    <div class="row g-5">
+      <div class="col-md-8">
+        
+        <article class="blog-post my-5">
+          <h2 class="blog-post-title ">{{article.title}}</h2>
+          <p class="blog-post-meta">{{article.date}} by <a href="{{article.author.profile.get_absolute_url}}" target="_blank">
+            
+            {% if article.author.profile.full_name %}
+            {{article.author.profile.full_name}}
+            {% else %}
+            {{ article.author.username }}
+            {{article.author.get_absolute_url}}
+            {% endif %} 
+          </a></p>
+          <hr>
+          
+          <div>
+            {{ article.contents|safe  }}
+          </div>
+        </article>
+        
+       
+      </div>
+  
+    </div>
+  
+  </main>
+
+
+{% endblock %}

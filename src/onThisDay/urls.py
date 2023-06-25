@@ -22,9 +22,13 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    path('blog/', include('blog.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('home.urls')),
 ]
 
+
+handler403 = "onThisDay.error_views.permission_denied_view"
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -20,10 +20,10 @@ def get_user_timezone(request: HttpRequest) -> str | None:
         return user_timezone
 
 
-def convert_utc_to_timezone(timezone: str) -> datetime:
+def convert_utc_to_timezone(utc_date: datetime, timezone: str) -> datetime:
 
     timezone_obj = pytz.timezone(timezone)
-    timezone_offset = datetime.utcnow().astimezone(timezone_obj).utcoffset()
+    timezone_offset = utc_date.astimezone(timezone_obj).utcoffset()
     date = datetime.utcnow() + timezone_offset
 
     return date

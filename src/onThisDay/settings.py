@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.google',         # Skip for now
     'crispy_forms',
     'crispy_bootstrap4',
+    'ckeditor',
+    'ckeditor_uploader',
 
     # local
     'blog',
@@ -133,6 +135,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
 
+LOGIN_URL = "home:home_page"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -189,5 +192,8 @@ if DEBUG:
     mimetypes.add_type("application/javascript", ".js", True)
 
 
+# CkEditor
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 

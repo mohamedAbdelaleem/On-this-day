@@ -7,9 +7,13 @@ from django.contrib import messages
 from allauth.account import forms as allauth_forms
 from .models import Profile, CustomUser
 from .forms import ProfileForm
+from home.http_util import generate_redirect_destination
 
 
 def register(request: HttpRequest) -> HttpResponse:
+
+    redirect_to = generate_redirect_destination(request)
+    response = redirect(redirect_to)
 
     if request.method == "POST":
         form = allauth_forms.SignupForm(data=request.POST)
@@ -25,16 +29,17 @@ def register(request: HttpRequest) -> HttpResponse:
             for error in  field_errors:
                 messages.error(request, error)
             
-            response = redirect("home:home_page")
             response.set_cookie("redirected_from", "signup")        ####
-            
-            return response
-            
+                        
 
-    return redirect('home:home_page')
+    return response
         
 
 def login_view(request: HttpRequest) -> HttpResponse:
+
+    redirect_to = generate_redirect_destination(request)
+    response = redirect(redirect_to)
+
     if request.method == "POST":
         form = allauth_forms.LoginForm(request=request, data=request.POST)
         if form.is_valid():
@@ -47,12 +52,9 @@ def login_view(request: HttpRequest) -> HttpResponse:
             for error in  field_errors:
                 messages.error(request, error)
             
-            response = redirect("home:home_page")
             response.set_cookie("redirected_from", "login")         #####
             
-            return response
-
-    return redirect('home:home_page')
+    return response
 
 
 @login_required
@@ -61,8 +63,9 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         logout(request)
     
-    return redirect("home:home_page")
-    
+    redirect_to = generate_redirect_destination(request)
+
+    return redirect(redirect_to)
 
 
 def display_profile_view(request: HttpRequest, profile_id: int) -> HttpResponse:
