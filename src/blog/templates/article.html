@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block specific_styles %} 
+
+<link href="{% static 'froala_editor/css/froala_style.min.css' %}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
 
 {% block content %}
 
@@ -7,8 +13,9 @@
 
     <div class="row g-5">
       <div class="col-md-8">
-        
+
         <article class="blog-post my-5">
+          
           <h2 class="blog-post-title ">{{article.title}}</h2>
           <p class="blog-post-meta">{{article.date}} by <a href="{{article.author.profile.get_absolute_url}}" target="_blank">
             
@@ -18,19 +25,58 @@
             {{ article.author.username }}
             {{article.author.get_absolute_url}}
             {% endif %} 
-          </a></p>
-          <hr>
+          </a>
           
-          <div>
-            {{ article.contents|safe  }}
+          
+        </p>
+        {% if request.user.id == article.author.id %}
+        <div>
+          <a class="btn btn-outline-secondary btn-sm " href="{% url 'blog:edit_article' slug=article.slug %}">Edit</a>
+          <a class="btn btn-outline-danger btn-sm  mx-1" href="" data-bs-toggle="modal" data-bs-target="#modalDeleteForm">Delete</a>
+        </div>
+        {% endif %}
+          
+        <hr>
+          
+          <div class="fr-view">
+            {{ article.contents| safe   }}
+            {{ article.contents }}
+         
           </div>
         </article>
-        
-       
+               
       </div>
   
     </div>
-  
+    
+
+    <div class="modal fade" id="modalDeleteForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Deletion Confirm</h4>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <p class="m-3"> Are you sure you want to delete this article? </p>
+        <form class="p-3" action="{% url 'blog:delete_article' slug=article.slug %}" method="post">
+          {% csrf_token %}
+          
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-danger">Yes</button>
+            <button type="button" class="close btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+              No
+            </button>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+
+
   </main>
 
 

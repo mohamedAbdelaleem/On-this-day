@@ -31,6 +31,7 @@ def generate_redirect_destination(request: HttpRequest, default: str='/') -> str
 
     redirect_to = default
     referrer = request.META.get("HTTP_REFERER")
+    print(referrer)
     if referrer:
         redirect_to = referrer
     

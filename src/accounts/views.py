@@ -7,7 +7,7 @@ from django.contrib import messages
 from allauth.account import forms as allauth_forms
 from .models import Profile, CustomUser
 from .forms import ProfileForm
-from home.http_util import generate_redirect_destination
+from utils.http_util import generate_redirect_destination
 
 
 def register(request: HttpRequest) -> HttpResponse:

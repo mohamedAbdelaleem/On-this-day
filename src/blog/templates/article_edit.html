@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags  %}
+{% load static %}
+
+
+{% block specific_styles %} 
+
+<link href="{% static 'froala_editor/css/froala_editor.pkgd.min.css' %}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block content %}
+
+<main class="container-lg my-3">
+
+    <div class="row g-5">
+      <div class="col-md-8">
+        
+       <form action="{% url 'blog:edit_article' slug=article.slug %}" method="post">
+        {% csrf_token %}
+        {{form | crispy}}
+        <button type="submit" class="btn btn-primary mt-4">Save</button>
+       </form>
+       
+      </div>
+  
+    </div>
+  
+  </main>
+
+
+
+{% endblock %}
+
+{% block js_related %}
+
+  <script type="text/javascript" src="{% static 'froala_editor/js/froala_editor.pkgd.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/plugins/image.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/plugins/image_manager.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/plugins/font_size.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/plugins/font_family.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/plugins/line_breaker.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/plugins/link.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/plugins/fullscreen.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/plugins/code_view.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/plugins/code_beautifier.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor/js/froala-django.js' %}"></script>
+
+  <script>
+    new FroalaEditor('#id_contents', {
+      inlineMode: false, 
+      imageUploadURL: "/froala_editor/image_upload/", 
+      imageUploadParams: {csrfmiddlewaretoken: getCookie("csrftoken")},
+      fileUpload: false,
+      pluginsEnabled: ["align", "charCounter", "codeBeautifier", "codeView", "colors", "draggable", "embedly", "emoticons", "entities", "fontAwesome", 
+        "fontFamily", "fontSize", "fullscreen", "image", "imageTUI", "imageManager", "inlineStyle", "inlineClass", "lineBreaker", "lineHeight",
+        "link", "lists", "paragraphFormat", "paragraphStyle", "quickInsert", "quote", "save", "table", "url", "wordPaste"],
+      imageDeleteURL: "/froala_editor/delete_image/",
+
+      events: {
+        'image.removed': function ($img) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+
+            // Image was removed.
+            if (this.readyState == 4 && this.status == 200) {
+              console.log ('image was deleted');
+            }
+          };
+          var siteName = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+          console.log(siteName);
+          console.log($img.attr('src').replace(siteName, ''));
+          xhttp.open("POST", "/froala_editor/delete_image/", true);
+          xhttp.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+          var formData = new FormData();
+          formData.append('src', $img.attr('src').replace(siteName, ''));
+          xhttp.send(formData);
+        }
+      }
+    })
+  </script>
+
+{% endblock %}

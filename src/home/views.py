@@ -4,8 +4,8 @@ from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator
 from django.core.cache import cache
 from .fetch_api import fetch_on_this_day_events, convert_on_this_day_data
-from .timezones_util import get_user_timezone, convert_utc_to_timezone
-from .http_util import generate_response
+from utils.timezones_util import get_user_timezone, convert_utc_to_timezone
+from utils.http_util import generate_response
 
 
 def home(request: HttpRequest) -> HttpResponse:
